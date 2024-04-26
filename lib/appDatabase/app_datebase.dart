@@ -1,4 +1,5 @@
 
+import 'package:database_db_app/models/note_models.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -45,19 +46,25 @@ class AppDatabase {
 
   /// db create
   /// table create
+
+
   /// insert data
-  void addNote({required String title, required String desc}) async {
+  void addNote({required NoteModel newNote}) async {
     var db = await getDB();
-    db.insert(TABLE_NOTE_NAME, {
-      COLUMN_NOTE_TITLE: title,
-      COLUMN_NOTE_DESC: desc,
-    });
+    db.insert(TABLE_NOTE_NAME, newNote.toMap());
   }
 
   /// fetch data
-  Future<List<Map<String, dynamic>>> fetchAllNotes() async {
+  Future<List<NoteModel>> fetchAllNotes() async {
     var db = await getDB();
     var data = await db.query(TABLE_NOTE_NAME);
-    return data;
+
+    List<NoteModel> mData = [];
+
+    for(Map<String, dynamic> eachMap in data) {
+      var eachModel = NoteModel.fromMap(eachMap);
+      mData.add(eachModel);
+    }
+    return mData;
   }
 }

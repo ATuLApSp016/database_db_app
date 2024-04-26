@@ -11,9 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      debugShowMaterialGrid: false,
       title: 'Database',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -21,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  HomePage(),
+      home: HomePage(),
     );
   }
 }
