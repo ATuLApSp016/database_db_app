@@ -1,12 +1,9 @@
-
 import 'package:database_db_app/models/note_models.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
-
-
   /// creating singleton
   AppDatabase._();
 
@@ -47,7 +44,6 @@ class AppDatabase {
   /// db create
   /// table create
 
-
   /// insert data
   void addNote({required NoteModel newNote}) async {
     var db = await getDB();
@@ -61,10 +57,24 @@ class AppDatabase {
 
     List<NoteModel> mData = [];
 
-    for(Map<String, dynamic> eachMap in data) {
+    for (Map<String, dynamic> eachMap in data) {
       var eachModel = NoteModel.fromMap(eachMap);
       mData.add(eachModel);
     }
     return mData;
+  }
+
+  ///update the note
+  Future<void> updateNote(NoteModel updatedNote) async {
+    var db = await getDB();
+    db.update(TABLE_NOTE_NAME, updatedNote.toMap(),
+        where: '$COLUMN_NOTE_ID = ${updatedNote.id}');
+  }
+
+  ///delete the note
+  deleteNote(int id) async {
+    var db = await getDB();
+    db.delete(TABLE_NOTE_NAME,
+        where: '$COLUMN_NOTE_ID = ?', whereArgs: ['$id']);
   }
 }
