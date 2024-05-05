@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    db = AppDatabase.db;
+    db = AppDatabase.instance;
     getNotes();
   }
 
@@ -208,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                           id: updateIndex,
                           title: titleController.text,
                           desc: descController.text,
+                          userId: updateIndex, createdAt: '',
                         );
                         db!.updateNote(updateNote);
 
@@ -216,13 +217,14 @@ class _HomePageState extends State<HomePage> {
                       } else {
                         /// using Map
                         /// add note into database
-                        db!.addNote(
-                            newNote: NoteModel(
-                                title: titleController.text,
-                                desc: descController.text,
-                                createdAt: DateTime.now()
-                                    .millisecondsSinceEpoch
-                                    .toString()));
+                        db!.addNote(NoteModel(
+                            title: titleController.text,
+                            desc: descController.text,
+                            createdAt: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            id: 0,
+                            userId: 0));
 
                         getNotes();
                         Navigator.pop(context);
@@ -273,8 +275,9 @@ class _HomePageState extends State<HomePage> {
                 OutlinedButton(
                     onPressed: () {
                       /// add note into database
-                      db!.addNote(
-                          newNote: NoteModel(
+                      db!.addNote(NoteModel(
+                        id: 0,
+                        userId: 0,
                         title: titleController.text,
                         desc: descController.text,
                         createdAt:
@@ -329,6 +332,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       /// update note into database
                       var updateNote = NoteModel(
+                        id: 0,
+                        userId: 0,
                         title: titleController.text,
                         desc: descController.text,
                         createdAt:

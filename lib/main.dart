@@ -1,4 +1,4 @@
-import 'package:database_db_app/pages/home_page.dart';
+import 'package:database_db_app/appDatabase/app_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,10 +16,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff575DFB)),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      initialRoute: AppRoutes.SIGNIN_PAGE,
+      routes: AppRoutes.routesMap(),
     );
   }
 }
